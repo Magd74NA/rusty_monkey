@@ -1,3 +1,4 @@
+//Check if all these traits are needed and useful?
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TokenType {
     Illegal,
