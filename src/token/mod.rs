@@ -1,43 +1,72 @@
-pub type TokenType = &'static str;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TokenType {
+    Illegal,
+    Eof,
+    // Identifiers + literals
+    Ident,
+    Int,
+    // Operators
+    Assign,
+    Plus,
+    Minus,
+    Slash,
+    Asterisk,
+    Gt,
+    Lt,
+    Bang,
+    // Two-char operators
+    Eq,
+    NotEq,
+    // Delimiters
+    Comma,
+    Semicolon,
+    LParen,
+    RParen,
+    LBrace,
+    RBrace,
+    // Keywords
+    Function,
+    Let,
+    Return,
+    If,
+    True,
+    Else,
+    False,
+}
 
-pub const ILLEGAL: TokenType = "ILLEGAL";
-pub const EOF: TokenType = "EOF";
-
-// Identifiers + literals
-pub const IDENT: TokenType = "IDENT";
-pub const INT: TokenType = "INT";
-
-// Operators
-pub const ASSIGN: TokenType = "=";
-pub const PLUS: TokenType = "+";
-pub const MINUS: TokenType = "-";
-pub const SLASH: TokenType = "/";
-pub const ASTERISK: TokenType = "*";
-pub const GT: TokenType = ">";
-pub const LT: TokenType = "<";
-pub const BANG: TokenType = "!";
-
-// Two-char operators
-pub const EQ: TokenType = "==";
-pub const NOT_EQ: TokenType = "!=";
-
-// Delimiters
-pub const COMMA: TokenType = ",";
-pub const SEMICOLON: TokenType = ";";
-
-pub const LPAREN: TokenType = "(";
-pub const RPAREN: TokenType = ")";
-pub const LBRACE: TokenType = "{";
-pub const RBRACE: TokenType = "}";
-
-// Keywords
-pub const FUNCTION: TokenType = "FUNCTION";
-pub const LET: TokenType = "LET";
-pub const RETURN: TokenType = "RETURN";
-pub const IF: TokenType = "IF";
-pub const TRUE: TokenType = "TRUE";
-pub const ELSE: TokenType = "ELSE";
-pub const FALSE: TokenType = "FALSE";
+impl TokenType {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            TokenType::Illegal => "ILLEGAL",
+            TokenType::Eof => "EOF",
+            TokenType::Ident => "IDENT",
+            TokenType::Int => "INT",
+            TokenType::Assign => "=",
+            TokenType::Plus => "+",
+            TokenType::Minus => "-",
+            TokenType::Slash => "/",
+            TokenType::Asterisk => "*",
+            TokenType::Gt => ">",
+            TokenType::Lt => "<",
+            TokenType::Bang => "!",
+            TokenType::Eq => "==",
+            TokenType::NotEq => "!=",
+            TokenType::Comma => ",",
+            TokenType::Semicolon => ";",
+            TokenType::LParen => "(",
+            TokenType::RParen => ")",
+            TokenType::LBrace => "{",
+            TokenType::RBrace => "}",
+            TokenType::Function => "FUNCTION",
+            TokenType::Let => "LET",
+            TokenType::Return => "RETURN",
+            TokenType::If => "IF",
+            TokenType::True => "TRUE",
+            TokenType::Else => "ELSE",
+            TokenType::False => "FALSE",
+        }
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Token {
@@ -47,13 +76,13 @@ pub struct Token {
 
 pub fn lookup_ident(ident: &str) -> TokenType {
     match ident {
-        "fn" => FUNCTION,
-        "let" => LET,
-        "return" => RETURN,
-        "if" => IF,
-        "else" => ELSE,
-        "true" => TRUE,
-        "false" => FALSE,
-        _ => IDENT,
+        "fn" => TokenType::Function,
+        "let" => TokenType::Let,
+        "return" => TokenType::Return,
+        "if" => TokenType::If,
+        "else" => TokenType::Else,
+        "true" => TokenType::True,
+        "false" => TokenType::False,
+        _ => TokenType::Ident,
     }
 }
